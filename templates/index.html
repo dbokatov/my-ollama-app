@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <title>Text Polish — Local writing assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Text Polish home">
+          <span class="brand-mark" aria-hidden="true">✳</span>
+          <span>text<span class="brand-light">polish</span></span>
+        </a>
+        <div class="local-badge"><span class="status-dot"></span> Local on your Mac</div>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">YOUR EVERYDAY WRITING SPACE</p>
+        <h1>Say it <span>more clearly.</span></h1>
+        <p class="intro-copy">Drop in a draft. Get a friendlier, clearer version—with a quick note about what changed.</p>
+      </section>
+
+      <section class="workspace" aria-label="Text editor">
+        <form id="rewrite-form" class="panel input-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="step-label">01 / YOUR DRAFT</span>
+              <h2>What would you like to improve?</h2>
+            </div>
+            <span class="soft-icon" aria-hidden="true">✎</span>
+          </div>
+
+          <label class="sr-only" for="source-text">Text to improve</label>
+          <textarea id="source-text" name="text" maxlength="20000" placeholder="Paste an email, a message, or any text you’re working on…" required></textarea>
+
+          <div class="input-meta">
+            <span>Tip: ⌘ Enter to improve</span>
+            <span id="char-count">0 / 20,000</span>
+          </div>
+
+          <div class="form-actions">
+            <button id="clear-button" class="button button-quiet" type="button">Clear</button>
+            <button id="submit-button" class="button button-primary" type="submit">
+              <span class="button-sparkle" aria-hidden="true">✳</span>
+              <span id="submit-label">Improve text</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <button id="stop-button" class="button button-stop" type="button" hidden>Stop</button>
+          </div>
+        </form>
+
+        <section class="panel output-panel" aria-live="polite" aria-busy="false">
+          <div class="panel-heading output-heading">
+            <div>
+              <span class="step-label">02 / THE POLISHED VERSION</span>
+              <h2>Your improved text</h2>
+            </div>
+            <button id="copy-button" class="copy-button" type="button" disabled aria-label="Copy improved text" title="Copy improved text">
+              <span aria-hidden="true">▢</span> Copy
+            </button>
+          </div>
+
+          <div id="placeholder" class="placeholder">
+            <div class="placeholder-orbit" aria-hidden="true"><span>✳</span></div>
+            <p>Your polished text will appear here.</p>
+            <span>Friendly, clear, and still yours.</span>
+          </div>
+
+          <div id="result" class="result" hidden>
+            <article class="result-section">
+              <h3><span class="result-icon text-icon" aria-hidden="true">Aa</span> Improved text</h3>
+              <div id="improved-text" class="result-copy"></div>
+            </article>
+            <article class="result-section explanation-section">
+              <h3><span class="result-icon why-icon" aria-hidden="true">✦</span> Why I changed it</h3>
+              <div id="explanation-text" class="result-copy explanation-copy"></div>
+            </article>
+          </div>
+
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+          <div class="stream-status" id="stream-status" hidden><span class="status-dot"></span><span>Writing your revision…</span></div>
+        </section>
+      </section>
+
+      <footer class="footer">
+        <span><span class="footer-lock" aria-hidden="true">◇</span> Your text is sent to your local Ollama model.</span>
+        <span class="model-label">{{ model_name }}</span>
+      </footer>
+    </main>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </body>
+</html>
